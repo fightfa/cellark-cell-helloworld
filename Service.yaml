@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  #本服务Service的名称：
+  name: cellark-helloworld
+spec:
+  ports:
+    #本服务Service的端口：
+    - port: 8111
+  #每个Service都有一个“标签选择器”：
+  selector:
+    #表明拥有“metadata. labels. app:cellark-helloworld-pod”这个标签的Pod都是为它服务的
+    app: cellark-helloworld-pod

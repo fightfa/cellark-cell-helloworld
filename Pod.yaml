@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: cellark-helloworld-pod
+  #每个Pod都可以贴一个或多个不同的标签（Label）
+  labels:
+       #表明本Pod为拥有“spec. selector. app: cellark-helloworld-pod”的Service服务
+       app: cellark-helloworld-pod
+spec:
+      containers:
+        - name: cellark-helloworld-server
+          #远期目标是Android apk上可以直接下载docker仓库上的镜像，目前先实现从git中心仓库下载称之为“镜像”或“快照”的压缩文件的方式：
+          image: http://github.com/zzzz
+          ports:
+            - containerPort: 8111
+      restartPolicy: Never
