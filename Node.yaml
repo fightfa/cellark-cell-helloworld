@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Node
+metadata:
+   id: 3fbc99918904a2d1
+   name: node-myhonor8
+deviceInfo:
+   MODEL: FRD-AL00
+   RELEASE: '7.0'
+   SDK: 24
+   android_id: 3fbc99918904a2d1
+   os: Android
+   type: phone
+   versionCode: 0
+   versionName: 'null'

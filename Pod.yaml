@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: cellark-helloworld-pod
+  name: cellark-helloworld-deployment-pod
   #每个Pod都可以贴一个或多个不同的标签（Label）
   labels:
-       #表明本Pod为拥有“spec. selector. app: cellark-helloworld-pod”的Service服务
+       #表明本Pod为拥有“spec. selector. app: cellark-helloworld-pod”标签选择的Service.yaml所服务
        app: cellark-helloworld-pod
 spec:
       containers:

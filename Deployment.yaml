@@ -1,0 +1,29 @@
+#Deployment/RC的概念：它的作用是用来告诉Kubernetes，某种类型的Pod（拥有某个特定标签的Pod）需要在集群中创建几个副本实例
+#Deployment/RC的定义其实是Pod副本数量的声明（replicas）+Pod创建模板（Template），所以Pod需要在多个节点部署时可以直接用本配置，而不用Pod.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cellark-helloworld-deployment
+spec:
+  #Pod副本（replicas）数量的声明，把replicas设置为1一般就与Pod.yaml等效
+  replicas: 2
+  template: #template后面内容相当于Pod.yaml中的内容 ，并省略了kind: Pod和metadata. name。启动后pod name会被自动命名为上面的name加上类似“-5py34”的随机后缀
+    metadata:
+      labels:
+        app: cellark-helloworld-pod
+    spec:
+      #将contiki操作系统封装为微机虚拟机“计算机细胞”cell作为本处的一个container容器，有独立的ipv4、ipv6栈
+      containers:
+        - name: cellark-cell-helloworld
+          #远期目标是Android apk上可以直接下载docker仓库上的镜像，目前先实现从git中心仓库下载称之为“镜像”或“快照”的压缩文件的方式：
+          image: https://codeload.github.com/fightfa/cellark-cell-helloworld/zip/master
+#          image: https://github.com/fightfa/cellark-cell-helloworld/releases/download/v0.1/cellark-cell-helloworld.arm-linux-androideabi
+          # image zip解压后cell可执行文件的相对路径：#后续将不用此cellPath
+          cellPath: cellark-cell-helloworld-master/cellark-cell-helloworld.arm-linux-androideabi
+          env: #示例：
+            - name: ENV_KEY
+              value: ENV_VALUE
+          ports:
+            - containerPort: 8112
+#定义好所有Service与对应的Deployment/RC描述文件后，我们可以通过Kubernetes的命令行工具kubectrl –f create xxx.yaml提交到集群里，如果一切正常，Kubernetes会在几分钟内自动完成部署，你会看到相关的资源对象都已经创建成功
+#使用kubectl get svc或pods或rc

@@ -48,9 +48,9 @@ PROCESS_THREAD(hello_world_process, ev, data)
 {
   PROCESS_BEGIN();
 
-printf("Hello, world2\n");
-printf("Hello, wordld2\n");
-printf("Hello, wordld3\n");
+printf("123Hello, world2\n");
+//printf("Hello, wordld2\n");
+//printf("Hello, wordld3\n");
 
 
 PROCESS_END();

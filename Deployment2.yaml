@@ -1,12 +1,12 @@
-apiVersion: v1
 #Deployment/RC的概念：它的作用是用来告诉Kubernetes，某种类型的Pod（拥有某个特定标签的Pod）需要在集群中创建几个副本实例
 #Deployment/RC的定义其实是Pod副本数量的声明（replicas）+Pod创建模板（Template），所以Pod需要在多个节点部署时可以直接用本配置，而不用Pod.yaml
-kind: ReplicationController
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   name: cellark-helloworld-deployment
 spec:
   #Pod副本（replicas）数量的声明，把replicas设置为1一般就与Pod.yaml等效
-  replicas: 2
+  replicas: 3
   template: #template后面内容相当于Pod.yaml中的内容 ，并省略了kind: Pod和metadata. name。启动后pod name会被自动命名为上面的name加上类似“-5py34”的随机后缀
     metadata:
       labels:
@@ -14,9 +14,9 @@ spec:
     spec:
       #将contiki操作系统封装为微机虚拟机“计算机细胞”cell作为本处的一个container容器，有独立的ipv4、ipv6栈
       containers:
-        - name: cellark-helloworld-cell
+        - name: cellark-cell-helloworld
           #远期目标是Android apk上可以直接下载docker仓库上的镜像，目前先实现从git中心仓库下载称之为“镜像”或“快照”的压缩文件的方式：
-          image: http://github.com/zzzz
+          image: https://codeload.github.com/fightfa/cellark-cell-helloworld/zip/master
           env: #示例：
             - name: ENV_KEY
               value: ENV_VALUE
